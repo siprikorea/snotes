@@ -1,0 +1,15 @@
+*.iml
+.idea
+.gradle
+.kotlin
+build/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.DS_Store
+.omc/
+tools/.cache/
+xcuserdata/
+*.xcworkspace/xcuserdata/
+iosApp/build/

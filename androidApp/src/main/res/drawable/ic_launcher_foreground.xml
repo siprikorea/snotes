@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 흰 종이 위에 텍스트 줄 세 개: S Notes 아이콘 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,30h28l10,10v38a2,2 0,0 1,-2 2h-36a2,2 0,0 1,-2 -2v-46a2,2 0,0 1,2 -2z" />
+    <path
+        android:fillColor="#D9D7D2"
+        android:pathData="M64,30l10,10h-10z" />
+    <path
+        android:fillColor="#37352F"
+        android:pathData="M42,48h24v4h-24zM42,58h24v4h-24zM42,68h16v4h-16z" />
+</vector>
