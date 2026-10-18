@@ -88,7 +88,7 @@ updated: 2026-10-14T12:30:00Z
 
 ## Google 동기화 설정
 
-현재 OAuth 클라이언트 ID 는 자리표시자입니다. 아래를 마치기 전에는 설정 화면에 "OAuth 클라이언트가 설정되지 않았습니다" 가 표시되고 기기 안에만 저장됩니다.
+OAuth 클라이언트 값은 저장소에 넣지 않고 루트의 `local.properties`(git 제외)에서 읽습니다. 아래를 마치기 전에는 설정 화면에 "OAuth 클라이언트가 설정되지 않았습니다" 가 표시되고 기기 안에만 저장됩니다.
 
 1. [Google Cloud Console](https://console.cloud.google.com/) 에서 프로젝트를 만들고 **Google Drive API** 를 사용 설정합니다.
 2. **OAuth 동의 화면**: 범위에 `https://www.googleapis.com/auth/drive.file` 을 추가하고, 테스트 중이면 테스트 사용자에 본인 계정을 추가합니다.
@@ -97,11 +97,19 @@ updated: 2026-10-14T12:30:00Z
 | 유형 | 입력 | 넣을 곳 |
 |---|---|---|
 | Android | 패키지 `com.siprikorea.snotes`, 서명 인증서 SHA-1 (`./gradlew :androidApp:signingReport`) | 코드 수정 없음 (Play 서비스가 자동 인식) |
-| iOS | 번들 ID `com.siprikorea.snotes` | `OAuthConfig.IOS_CLIENT_ID` |
-| 데스크톱 앱 | — | `OAuthConfig.DESKTOP_CLIENT_ID`, `DESKTOP_CLIENT_SECRET` |
-| 웹 애플리케이션 | 승인된 JavaScript 원본: 개발 `http://localhost:8080`, 배포 주소 | `OAuthConfig.WEB_CLIENT_ID` |
+| iOS | 번들 ID `com.siprikorea.snotes` | `snotes.oauth.iosClientId` |
+| 데스크톱 앱 | — | `snotes.oauth.desktopClientId`, `snotes.oauth.desktopClientSecret` |
+| 웹 애플리케이션 | 승인된 JavaScript 원본: 개발 `http://localhost:8080`, 배포 주소 | `snotes.oauth.webClientId` |
 
-파일: `composeApp/src/commonMain/kotlin/com/siprikorea/snotes/config/OAuthConfig.kt`
+```properties
+# local.properties
+snotes.oauth.desktopClientId=xxxx.apps.googleusercontent.com
+snotes.oauth.desktopClientSecret=GOCSPX-xxxx
+snotes.oauth.iosClientId=xxxx.apps.googleusercontent.com
+snotes.oauth.webClientId=xxxx.apps.googleusercontent.com
+```
+
+빌드할 때 `:composeApp:generateOAuthSecrets` 가 이 값으로 `OAuthSecrets` 를 생성하고, `config/OAuthConfig.kt` 가 그것을 참조합니다. 비어 있는 플랫폼은 로그인 없이 동작합니다. 웹 배포 파일에는 웹 클라이언트 ID 가 그대로 들어가지만, 클라이언트 ID 는 공개돼도 괜찮은 값입니다.
 
 플랫폼별 로그인 방식:
 - **Android**: Google Play 서비스 `AuthorizationClient` (계정 선택/동의 화면)

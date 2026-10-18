@@ -34,7 +34,7 @@ Almost all code lives in `composeApp/src/commonMain`. `androidApp/` and `iosApp/
 
 **UI:** `App.kt` holds the root layout: a fixed sidebar on wide screens, a drawer on narrow ones. `ui/AppUiState.kt` handles navigation (current page plus back stack) and dialog visibility. Feature screens are `Sidebar`, `PageScreen`, `Dialogs` and `editor/*`. `InlineMarkdown.kt` styles `**bold**`/`*italic*`/etc. live while editing; the raw markers stay in the text.
 
-**Auth:** OAuth client IDs live in `config/OAuthConfig.kt` and are placeholders until configured. Without them the app runs local-only. The only scope is `drive.file`, so the app sees only files it created. Login per platform: Android uses Play Services `AuthorizationClient`; iOS and Desktop use `PkceOAuth` (iOS via `ASWebAuthenticationSession`, Desktop via a loopback redirect); Web uses a GIS token popup (session-only, about 1h).
+**Auth:** OAuth client IDs/secret come from `snotes.oauth.*` keys in the git-ignored root `local.properties`; the `:composeApp:generateOAuthSecrets` task turns them into a generated `OAuthSecrets` object (under `composeApp/build/generated/oauth`) that `config/OAuthConfig.kt` references. Never hard-code them in source — the repo is public. Blank values mean that platform runs local-only. The only scope is `drive.file`, so the app sees only files it created. Login per platform: Android uses Play Services `AuthorizationClient`; iOS and Desktop use `PkceOAuth` (iOS via `ASWebAuthenticationSession`, Desktop via a loopback redirect); Web uses a GIS token popup (session-only, about 1h).
 
 ## Known limitations (by design for now)
 
